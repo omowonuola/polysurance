@@ -48,7 +48,7 @@ npm run start:dev
 ```
 
 You can now head to `http://localhost:3000/api/#/` and see the API Swagger docs. 
-The example sales API that runs the fuction is located at the `http://localhost:3000/api/#/sales/calculateSales` endpoint in the swagger documentation.
+The example sales API that runs the fuction is located at the `http://localhost:3000/api/#/sales/SalesController_calculateSales` endpoint in the swagger documentation.
 
 ## 2. Design Decisions
 
