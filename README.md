@@ -1,73 +1,95 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+SALES SOFTWARE APP
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+API
 
-## Description
+- REST API With Nestjs
+- Swagger documentation,
+- Folder Structure
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 1. Getting started
+## Project goals
 
-## Installation
+The goal of this project is to build a sales application that has a function that calculates the Total sales before discount, Total sales after discount, Total amount of money lost via Discount Codes, and finally the average discount per customer for the day as a percentage using NestJS.
 
-```bash
-$ npm install
+### 1.1 Requirements
+
+Before starting, make sure you have these components on your local machine:
+
+- An up-to-date release of [NodeJS](https://nodejs.org/) and NPM
+
+### 1.2 Project configuration
+
+Start by cloning this project on your local machine.
+
+``` sh
+git clone https://github.com/omowonuola/polysurance.git
+npm install to install dependencies
+NOTE: The main branch is the updated branch for the codebase
+
+RUN WITH SERVER(npm)
+
+The next step will be to install all the dependencies of the project.
+
+```sh
+use npm install for the server dependencies installation
 ```
 
-## Running the app
+For a standard development configuration, you can leave the default values for PORT, which has the default value of 3000.
 
-```bash
-# development
-$ npm run start
+### 1.3 Launch and discover with NPM
 
-# watch mode
-$ npm run start:dev
+You are now ready to launch the NestJS application using the command below.
 
-# production mode
-$ npm run start:prod
+```sh
+
+# Launch the development server with npm command
+npm run start:dev
 ```
 
-## Test
+You can now head to `http://localhost:3000/api/#/` and see the API Swagger docs. 
+The example sales API that runs the fuction is located at the `http://localhost:3000/api/#/sales/calculateSales` endpoint in the swagger documentation.
 
-```bash
-# unit tests
-$ npm run test
+## 2. Design Decisions
 
-# e2e tests
-$ npm run test:e2e
+```sh
 
-# test coverage
-$ npm run test:cov
+The design decisions were implemented to create a sales application that is scalable, secure, and efficient. Using the model that helps to accommodate a large number of sales records, the application efficiently calculates the total sales before discount, total sales after discount, the total amount of money lost via Discount Codes, and finally the average discount per customer for the day as a percentage.
+```
+## 3. Project structure
+
+This template was made with a well-defined directory structure.
+
+```sh
+src/
+├── sales  # The sales folder contains the implementations of queries, API for the sales function
+│   ├── model  # The model folder contains the database structure implementations for the sale app
+│   ├──├──sales.interface.ts # The interface file contains the product, order and discount interface.
+│   ├──sales.controller.ts # The sales controller file contains the sales routes for the APIs.
+│   ├──sales.module.ts # The sales module file contains the import of the sales services and controller
+│   ├──sales.service.spec.ts # The sales service spec file contains the unit test for sales service APIs
+│   ├──sales.service.ts # The sales service file contains the data storage and retrieval queries for sales
+├── app.module.ts # The sales service file contains the data storage and retrieval queries for sales
+├── package.json # The file contains the dependencies used in the codebase.
+└── main.ts
 ```
 
-## Support
+## 4. Default NPM commands
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+The NPM commands below are already included with this template and can be used to quickly run, build and test the project.
 
-## Stay in touch
+```sh
+# Start the application using yarn NodeJS in development
+npm run start:dev (use this to start the application locally)
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+# Run the project' UNIT TESTS
+npm run test:watch(use this to start the unit testing locally)
+```
 
-## License
 
-Nest is [MIT licensed](LICENSE).
+## 6. Future Improvements
+```sh
+
+Additionally, the optimization of the function can be improved to accommodate heavy data from the sales database.
+
+```
