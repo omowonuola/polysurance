@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import * as fs from 'fs';
-import { Discount, Order, Product } from './model/sale.interface';
-import path from 'path';
-import * as discounts from './discounts.json';
-import * as orders from './orders.json';
-import * as products from './products.json';
+import * as discounts1 from './discounts1.json';
+import * as orders1 from './orders1.json';
+import * as products1 from './products1.json';
+
+import * as discounts2 from './discounts2.json';
+import * as orders2 from './orders2.json';
+import * as products2 from './products2.json';
 
 @Injectable()
 export class SalesService {
@@ -19,12 +20,12 @@ export class SalesService {
     let totalDiscountAmount = 0;
     let discountCount = 0;
 
-    orders.forEach((order) => {
+    orders1.forEach((order) => {
       let orderTotalBeforeDiscount = 0;
       let orderTotalAfterDiscount = 0;
 
       order.items.forEach((item) => {
-        const product = products.find((p) => p.sku === item.sku);
+        const product = products1.find((p) => p.sku === item.sku);
 
         if (product) {
           const itemTotalBeforeDiscount = item.quantity * product.price;
@@ -63,12 +64,63 @@ export class SalesService {
   }
 
   calculateDiscount(amount: number, discountCode: string) {
-    const discountInfo = discounts.find((d) => d.key === discountCode);
+    const discountInfo = discounts1.find((d) => d.key === discountCode);
 
     if (discountInfo) {
       return discountInfo.value * amount;
     }
 
     return 0;
+  }
+
+  async calculateSalesSummary(): Promise<{
+    totalSalesBeforeDiscount: number;
+    totalSalesAfterDiscount: number;
+    totalDiscountAmount: number;
+    averageDiscountPerCustomer: number;
+  }> {
+    let totalSalesBeforeDiscount = 0;
+    let totalSalesAfterDiscount = 0;
+    let totalDiscountAmount = 0;
+    let totalCustomers = 0;
+    for (const order of orders2) {
+      totalCustomers++;
+
+      let orderTotal = 0;
+
+      for (const item of order.items) {
+        const product = products2.find((p) => p.sku === item.sku);
+
+        if (product) {
+          orderTotal += product.price * item.quantity;
+        }
+      }
+
+      totalSalesBeforeDiscount += orderTotal;
+
+      const appliedDiscounts = order.discount ? order.discount.split(',') : [];
+      let orderDiscount = 0;
+
+      for (const discountKey of appliedDiscounts) {
+        const appliedDiscount = discounts2.find((d) => d.key === discountKey);
+
+        if (appliedDiscount) {
+          orderDiscount += appliedDiscount.value;
+        }
+      }
+
+      totalSalesAfterDiscount += orderTotal - orderTotal * orderDiscount;
+      totalDiscountAmount += orderTotal * orderDiscount;
+    }
+
+    const averageDiscountPerCustomer =
+      (totalDiscountAmount / totalCustomers) * 100;
+
+    return {
+      totalSalesBeforeDiscount,
+      totalSalesAfterDiscount,
+      totalDiscountAmount,
+      averageDiscountPerCustomer,
+    };
   }
 }

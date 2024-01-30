@@ -15,4 +15,14 @@ export class SalesController {
   async calculateSales(): Promise<unknown> {
     return this.salesService.calculateSales();
   }
+
+
+  @Get('/calculateSalesSummary')
+  @ApiOperation({ summary: 'calculate sales summary' })
+  @ApiResponse({
+    description: 'calculate total sales summary',
+  })
+  async calculateSalesSummary(): Promise<unknown> {
+    return this.salesService.calculateSalesSummary();
+  }
 }
