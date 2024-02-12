@@ -16,7 +16,6 @@ export class SalesController {
     return this.salesService.calculateSales();
   }
 
-
   @Get('/calculateSalesSummary')
   @ApiOperation({ summary: 'calculate sales summary' })
   @ApiResponse({

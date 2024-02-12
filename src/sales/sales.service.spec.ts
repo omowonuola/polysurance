@@ -126,7 +126,7 @@ describe('SalesService', () => {
       expect(result.totalSalesBeforeDiscount).toEqual(3888.8);
       expect(result.totalSalesAfterDiscount).toEqual(3205.134);
       expect(result.totalDiscountAmount).toEqual(683.666);
-      expect(result.averageDiscountPercentage).toEqual(17.580384694507302);
+      expect(result.averageDiscountPerCustomer).toEqual(17091.65);
     });
   });
 });

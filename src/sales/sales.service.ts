@@ -13,16 +13,17 @@ export class SalesService {
     totalSalesBeforeDiscount: number;
     totalSalesAfterDiscount: number;
     totalDiscountAmount: number;
-    averageDiscountPercentage: number;
+    averageDiscountPerCustomer: number;
   }> {
     let totalSalesBeforeDiscount = 0;
     let totalSalesAfterDiscount = 0;
     let totalDiscountAmount = 0;
-    let discountCount = 0;
+    let totalCustomersWithDiscount = 0;
 
     orders1.forEach((order) => {
       let orderTotalBeforeDiscount = 0;
       let orderTotalAfterDiscount = 0;
+      let hasDiscount = false;
 
       order.items.forEach((item) => {
         const product = products1.find((p) => p.sku === item.sku);
@@ -37,29 +38,37 @@ export class SalesService {
               itemTotalBeforeDiscount,
               order.discount,
             );
+
+            if (discount > 0) {
+              hasDiscount = true;
+            }
           }
 
           const itemTotalAfterDiscount = itemTotalBeforeDiscount - discount;
           orderTotalAfterDiscount += itemTotalAfterDiscount;
 
           totalDiscountAmount += discount;
-          discountCount++;
         }
       });
 
       totalSalesBeforeDiscount += orderTotalBeforeDiscount;
       totalSalesAfterDiscount += orderTotalAfterDiscount;
+
+      if (hasDiscount) {
+        totalCustomersWithDiscount++;
+      }
     });
 
-    const averageDiscountPercentage = discountCount
-      ? (totalDiscountAmount / totalSalesBeforeDiscount) * 100
-      : 0;
+    const averageDiscountPerCustomer =
+      totalCustomersWithDiscount === 0
+        ? 0
+        : (totalDiscountAmount / totalCustomersWithDiscount) * 100;
 
     return {
       totalSalesBeforeDiscount,
       totalSalesAfterDiscount,
       totalDiscountAmount,
-      averageDiscountPercentage,
+      averageDiscountPerCustomer,
     };
   }
 
@@ -82,6 +91,7 @@ export class SalesService {
     let totalSalesBeforeDiscount = 0;
     let totalSalesAfterDiscount = 0;
     let totalDiscountAmount = 0;
+    let totalCustomersWithDiscount = 0;
     let totalCustomers = 0;
     for (const order of orders2) {
       totalCustomers++;
@@ -101,6 +111,10 @@ export class SalesService {
       const appliedDiscounts = order.discount ? order.discount.split(',') : [];
       let orderDiscount = 0;
 
+      if (appliedDiscounts.length > 0) {
+        totalCustomersWithDiscount++;
+      }
+
       for (const discountKey of appliedDiscounts) {
         const appliedDiscount = discounts2.find((d) => d.key === discountKey);
 
@@ -114,7 +128,9 @@ export class SalesService {
     }
 
     const averageDiscountPerCustomer =
-      (totalDiscountAmount / totalCustomers) * 100;
+      totalCustomersWithDiscount === 0
+        ? 0
+        : (totalDiscountAmount / totalCustomersWithDiscount) * 100;
 
     return {
       totalSalesBeforeDiscount,
